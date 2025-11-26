@@ -19,23 +19,6 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <script>
-      (() => {
-        const endpoint = "%VITE_ANALYTICS_ENDPOINT%";
-        const websiteId = "%VITE_ANALYTICS_WEBSITE_ID%";
-        const hasEndpoint = endpoint && endpoint !== "%VITE_ANALYTICS_ENDPOINT%";
-        const hasWebsiteId =
-          websiteId && websiteId !== "%VITE_ANALYTICS_WEBSITE_ID%";
-        if (!hasEndpoint || !hasWebsiteId) {
-          return;
-        }
-        const script = document.createElement("script");
-        script.defer = true;
-        script.src = `${endpoint.replace(/\/$/, "")}/umami`;
-        script.setAttribute("data-website-id", websiteId);
-        document.body.appendChild(script);
-      })();
-    </script>
   </body>
 
 </html>
