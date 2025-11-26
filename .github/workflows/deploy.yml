@@ -28,19 +28,35 @@ jobs:
       
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: 10
       
       - name: Install dependencies
         run: pnpm install
       
       - name: Build
         run: pnpm run build
+        env:
+          VITE_APP_TITLE: ${{ vars.VITE_APP_TITLE || 'Agentic Squads Magic Quadrant' }}
+          VITE_APP_LOGO: ${{ vars.VITE_APP_LOGO || 'https://placehold.co/128x128/E1E7EF/1F2937?text=App' }}
+          VITE_ANALYTICS_ENDPOINT: ${{ secrets.VITE_ANALYTICS_ENDPOINT || '' }}
+          VITE_ANALYTICS_WEBSITE_ID: ${{ secrets.VITE_ANALYTICS_WEBSITE_ID || '' }}
+          VITE_OAUTH_PORTAL_URL: ${{ secrets.VITE_OAUTH_PORTAL_URL || '' }}
+          VITE_APP_ID: ${{ secrets.VITE_APP_ID || '' }}
+          VITE_FRONTEND_FORGE_API_KEY: ${{ secrets.VITE_FRONTEND_FORGE_API_KEY || '' }}
+          VITE_FRONTEND_FORGE_API_URL: ${{ vars.VITE_FRONTEND_FORGE_API_URL || '' }}
+      
+      - name: List build output
+        run: |
+          echo "Current directory contents:"
+          ls -la
+          echo "Looking for dist directories:"
+          find . -name "dist" -type d
+          echo "Looking for build output:"
+          find . -name "*.html" -o -name "*.js" -o -name "*.css" | head -10
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./client/dist
+          path: ./dist/public
 
   deploy:
     environment:
