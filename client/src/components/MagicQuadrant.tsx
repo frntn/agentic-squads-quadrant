@@ -143,7 +143,7 @@ export default function MagicQuadrant({ selectedCategories }: MagicQuadrantProps
   const options: ChartOptions<'scatter'> = {
     responsive: true,
     maintainAspectRatio: true,
-    aspectRatio: 1.2,
+    aspectRatio: 1.6,
     plugins: {
       legend: {
         display: false, // We'll use custom legend
@@ -280,7 +280,7 @@ export default function MagicQuadrant({ selectedCategories }: MagicQuadrantProps
       </div>
 
       {/* Chart */}
-      <div className="bg-card rounded-lg p-6 shadow-lg border border-border">
+      <div className="bg-card rounded-lg p-6 shadow-lg border border-border max-w-4xl mx-auto">
         <Scatter options={options} data={{ datasets }} />
       </div>
 
