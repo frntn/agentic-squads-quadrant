@@ -24,20 +24,20 @@ export default function Home() {
             <h2 className="text-xl font-semibold mb-4 text-foreground">Quadrants du Magic Quadrant</h2>
             <div className="space-y-3 text-sm text-muted-foreground">
               <div>
-                <h3 className="font-semibold text-foreground mb-1">Augmented × Ponctuel</h3>
-                <p>Squads à faible autonomie pour des tâches ponctuelles</p>
+                <h3 className="font-semibold text-foreground mb-1">Co-pilots (Augmented × Ponctuel)</h3>
+                <p>Squads à faible autonomie pour des tâches ponctuelles (ex: aide à la rédaction, recherche)</p>
               </div>
               <div>
-                <h3 className="font-semibold text-foreground mb-1">Augmented × Continue</h3>
-                <p>Squads à faible autonomie en opération permanente (supervision, alertes)</p>
+                <h3 className="font-semibold text-foreground mb-1">Guardians (Augmented × Continue)</h3>
+                <p>Squads à faible autonomie en opération permanente (ex: supervision, alertes, veille)</p>
               </div>
               <div>
-                <h3 className="font-semibold text-foreground mb-1">Autonomous × Ponctuel</h3>
-                <p>Squads autonomes pour des projets spécifiques (génération, développement)</p>
+                <h3 className="font-semibold text-foreground mb-1">Solvers (Autonomous × Ponctuel)</h3>
+                <p>Squads autonomes pour des projets spécifiques (ex: génération de code, création de contenu)</p>
               </div>
               <div>
-                <h3 className="font-semibold text-foreground mb-1">Autonomous × Continue</h3>
-                <p>Squads autonomes en opération permanente (sécurité, monitoring)</p>
+                <h3 className="font-semibold text-foreground mb-1">Orchestrators (Autonomous × Continue)</h3>
+                <p>Squads autonomes en opération permanente (ex: sécurité gérée, monitoring auto-réparateur)</p>
               </div>
             </div>
           </div>

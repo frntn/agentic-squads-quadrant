@@ -9,6 +9,7 @@ import {
   Tooltip,
   Legend,
   ChartOptions,
+  Plugin
 } from 'chart.js';
 import { Scatter } from 'react-chartjs-2';
 import { Squad, squads, categoryColors } from '@/data/squads';
@@ -83,6 +84,33 @@ function getPointRadius(valeur: string): number {
       return 7;
   }
 }
+
+const backgroundLabelsPlugin: Plugin = {
+  id: 'backgroundLabels',
+  beforeDraw: (chart) => {
+    const { ctx, scales: { x, y } } = chart;
+    
+    ctx.save();
+    ctx.font = 'bold 32px Inter, sans-serif';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    
+    // Top Left: Guardians (Augmented, Continue) -> x=1.5, y=3.5
+    ctx.fillText('GUARDIANS', x.getPixelForValue(1.5), y.getPixelForValue(3.5));
+    
+    // Top Right: Orchestrators (Autonomous, Continue) -> x=3.5, y=3.5
+    ctx.fillText('ORCHESTRATORS', x.getPixelForValue(3.5), y.getPixelForValue(3.5));
+    
+    // Bottom Left: Co-pilots (Augmented, Ponctuel) -> x=1.5, y=1.5
+    ctx.fillText('CO-PILOTS', x.getPixelForValue(1.5), y.getPixelForValue(1.5));
+    
+    // Bottom Right: Solvers (Autonomous, Ponctuel) -> x=3.5, y=1.5
+    ctx.fillText('SOLVERS', x.getPixelForValue(3.5), y.getPixelForValue(1.5));
+    
+    ctx.restore();
+  }
+};
 
 export default function MagicQuadrant({ selectedCategories }: MagicQuadrantProps) {
   const [filteredSquads, setFilteredSquads] = useState<Squad[]>(squads);
@@ -281,7 +309,7 @@ export default function MagicQuadrant({ selectedCategories }: MagicQuadrantProps
 
       {/* Chart */}
       <div className="bg-card rounded-lg p-6 shadow-lg border border-border max-w-4xl mx-auto">
-        <Scatter options={options} data={{ datasets }} />
+        <Scatter options={options} data={{ datasets }} plugins={[backgroundLabelsPlugin]} />
       </div>
 
       {/* Legend with Squad Names */}
