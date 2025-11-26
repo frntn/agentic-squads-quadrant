@@ -15,6 +15,7 @@ import { Scatter } from 'react-chartjs-2';
 import { Squad, squads, categoryColors } from '@/data/squads';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { useIsMobile } from '@/hooks/useMobile';
 
 ChartJS.register(
   CategoryScale,
@@ -88,10 +89,13 @@ function getPointRadius(valeur: string): number {
 const backgroundLabelsPlugin: Plugin = {
   id: 'backgroundLabels',
   beforeDraw: (chart) => {
-    const { ctx, scales: { x, y } } = chart;
+    const { ctx, width, scales: { x, y } } = chart;
+    
+    // Responsive font size: 4% of width, min 12px, max 32px
+    const fontSize = Math.min(Math.max(12, Math.floor(width * 0.04)), 32);
     
     ctx.save();
-    ctx.font = 'bold 32px Inter, sans-serif';
+    ctx.font = `bold ${fontSize}px Inter, sans-serif`;
     ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
@@ -113,6 +117,7 @@ const backgroundLabelsPlugin: Plugin = {
 };
 
 export default function MagicQuadrant({ selectedCategories }: MagicQuadrantProps) {
+  const isMobile = useIsMobile();
   const [filteredSquads, setFilteredSquads] = useState<Squad[]>(squads);
   const [activeCategories, setActiveCategories] = useState<Set<Squad['category']>>(
     new Set(Object.keys(categoryColors) as Squad['category'][])
@@ -171,7 +176,7 @@ export default function MagicQuadrant({ selectedCategories }: MagicQuadrantProps
   const options: ChartOptions<'scatter'> = {
     responsive: true,
     maintainAspectRatio: true,
-    aspectRatio: 1.6,
+    aspectRatio: isMobile ? 1 : 1.6,
     plugins: {
       legend: {
         display: false, // We'll use custom legend
@@ -180,7 +185,7 @@ export default function MagicQuadrant({ selectedCategories }: MagicQuadrantProps
         display: true,
         text: 'Agentic Squads Magic Quadrant',
         font: {
-          size: 24,
+          size: isMobile ? 16 : 24,
           weight: 'bold',
         },
         color: '#e5e7eb',
@@ -233,7 +238,7 @@ export default function MagicQuadrant({ selectedCategories }: MagicQuadrantProps
           },
           color: '#e5e7eb',
           font: {
-            size: 13,
+            size: isMobile ? 10 : 13,
             weight: 'bold',
           },
         },
@@ -263,7 +268,7 @@ export default function MagicQuadrant({ selectedCategories }: MagicQuadrantProps
           },
           color: '#e5e7eb',
           font: {
-            size: 13,
+            size: isMobile ? 10 : 13,
             weight: 'bold',
           },
         },
@@ -308,7 +313,7 @@ export default function MagicQuadrant({ selectedCategories }: MagicQuadrantProps
       </div>
 
       {/* Chart */}
-      <div className="bg-card rounded-lg p-6 shadow-lg border border-border max-w-4xl mx-auto">
+      <div className={`bg-card rounded-lg shadow-lg border border-border max-w-4xl mx-auto ${isMobile ? 'p-2' : 'p-6'}`}>
         <Scatter options={options} data={{ datasets }} plugins={[backgroundLabelsPlugin]} />
       </div>
 
